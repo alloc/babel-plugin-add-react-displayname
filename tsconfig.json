@@ -1,0 +1,16 @@
+{
+  "include": ["index.ts"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "inlineSourceMap": true,
+    "jsx": "react",
+    "lib": ["esnext"],
+    "moduleResolution": "node",
+    "noEmitOnError": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "strict": true,
+    "target": "es5"
+  }
+}

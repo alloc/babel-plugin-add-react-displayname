@@ -1,20 +1,25 @@
 {
-  "name": "babel-plugin-add-react-displayname",
+  "name": "@wana/babel-plugin-add-react-displayname",
   "version": "0.0.5",
-  "description": "Automatically add displayName to all your components",
+  "description": "Automatically add displayName to all your withAuto components",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
-    "babel-core": "^6.14.0",
-    "babel-helper-plugin-test-runner": "^6.8.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.16.0",
-    "mocha": "^3.0.2",
-    "standard": "^8.1.0"
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/babel__core": "^7.1.3",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.12",
+    "@types/react": "^16.9.5",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "standard": "^8.1.0",
+    "typescript": "^3.6.4"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "build": "tsc -p .",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/opbeat/babel-plugin-add-react-displayname/issues"
   },
-  "homepage": "https://github.com/opbeat/babel-plugin-add-react-displayname#readme"
+  "homepage": "https://github.com/opbeat/babel-plugin-add-react-displayname#readme",
+  "dependencies": {
+    "@babel/helper-plugin-utils": "^7.0.0"
+  }
 }
