@@ -21,74 +21,78 @@ export default declare(
 function setDisplayNameIfPossible(
   path: NodePath<t.FunctionExpression | t.ArrowFunctionExpression>
 ) {
-  if (shouldSetDisplayNameForFuncExpr(path)) {
-    const id = findCandidateNameForExpression(path)
-    if (id) {
-      setDisplayNameAfter(path, id)
-    }
+  const prevStmt = findBlockChild(path)
+  if (!prevStmt) return
+
+  const displayName = inferDisplayName(path)
+  if (!displayName) return
+
+  try {
+    const newStmt = t.expressionStatement(
+      t.assignmentExpression(
+        '=',
+        t.memberExpression(
+          t.identifier(displayName),
+          t.identifier('displayName')
+        ),
+        t.stringLiteral(displayName)
+      )
+    )
+    newStmt.trailingComments = prevStmt.node.trailingComments
+    delete prevStmt.node.trailingComments
+    prevStmt.insertAfter(newStmt)
+  } catch (err) {
+    debugger
   }
 }
 
-function shouldSetDisplayNameForFuncExpr(
+function findLeftValue(expr: NodePath<t.Expression>) {
+  let path = expr.parentPath
+  while (path) {
+    if (path.isBlockParent() || path.isProperty()) {
+      return
+    }
+    if (path.isAssignmentExpression()) {
+      return path.node.left
+    }
+    if (path.isVariableDeclarator()) {
+      return path.node.id
+    }
+    path = path.parentPath
+  }
+}
+
+function findBlockChild(path: NodePath) {
+  while (path.parentPath) {
+    if (path.parentPath.isProperty()) {
+      return
+    }
+    if (path.parentPath.isBlockParent()) {
+      return path
+    }
+    path = path.parentPath
+  }
+}
+
+function inferDisplayName(
   funcPath: NodePath<t.FunctionExpression | t.ArrowFunctionExpression>
 ) {
   const parentNode = funcPath.parentPath.node
   if (t.isVariableDeclarator(parentNode)) {
     // Ignore plain function components, like "const Foo = () => { ... }"
-    return false
+    return null
   }
   if (t.isCallExpression(parentNode) && parentNode.callee == funcPath.node) {
     // Ignore IIFEs that return JSX, like "(() => { ... })()"
-    return false
+    return null
   }
-
-  // Parent must be either 'AssignmentExpression' or 'VariableDeclarator' or 'CallExpression' with a parent of 'VariableDeclarator'
-  let id
-
-  // Find our "VariableDeclarator" ancestor, if one exists.
-  let path = funcPath.parentPath
-  while (!t.isVariableDeclarator(path.node)) {
-    if (t.isProgram(path.node) || t.isObjectProperty(path.node)) {
-      return false
+  if (doesReturnJSX(funcPath.node.body)) {
+    const left = findLeftValue(funcPath)
+    if (t.isIdentifier(left)) {
+      return left.name
     }
-    path = path.parentPath
   }
-
-  const grandPath = path.parentPath.parentPath
-  if (
-    t.isProgram(grandPath.node) ||
-    t.isExportNamedDeclaration(grandPath.node)
-  ) {
-    id = path.node.id
-  }
-
-  if (id) {
-    return doesReturnJSX(funcPath.node.body)
-  }
-
-  return false
-}
-
-// https://github.com/babel/babel/blob/master/packages/babel-plugin-transform-react-display-name/src/index.js#L62-L77
-// crawl up the ancestry looking for possible candidates for displayName inference
-function findCandidateNameForExpression(path: NodePath) {
-  let id
-  path.find(path => {
-    if (path.isAssignmentExpression()) {
-      id = path.node.left
-      // } else if (path.isObjectProperty()) {
-      // id = path.node.key;
-    } else if (path.isVariableDeclarator()) {
-      id = path.node.id
-    } else if (path.isStatement()) {
-      // we've hit a statement, we should stop crawling up
-      return true
-    }
-
-    // we've got an id! no need to continue
-    return !!id
-  })
-  return id
+  return null
 }
 
 function doesReturnJSX(node: t.Expression | t.BlockStatement) {
@@ -108,24 +112,4 @@ function doesReturnJSX(node: t.Expression | t.BlockStatement) {
   }
 
   return false
-}
-
-function setDisplayNameAfter(
-  path: NodePath,
-  nameNodeId: t.Identifier,
-  displayName = nameNodeId.name
-) {
-  const blockPath = path.find(path => path.parentPath.isBlock())
-  if (blockPath) {
-    const expr = t.expressionStatement(
-      t.assignmentExpression(
-        '=',
-        t.memberExpression(nameNodeId, t.identifier('displayName')),
-        t.stringLiteral(displayName)
-      )
-    )
-    expr.trailingComments = blockPath.node.trailingComments
-    delete blockPath.node.trailingComments
-    blockPath.insertAfter(expr)
-  }
 }

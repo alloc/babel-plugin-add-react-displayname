@@ -2,7 +2,7 @@ dependencies:
   '@babel/helper-plugin-utils': 7.0.0
 devDependencies:
   '@babel/core': 7.6.4
-  '@babel/plugin-proposal-decorators': 7.6.0_@babel+core@7.6.4
+  '@babel/plugin-proposal-class-properties': 7.5.5_@babel+core@7.6.4
   '@babel/preset-react': 7.6.3_@babel+core@7.6.4
   '@babel/preset-typescript': 7.6.0_@babel+core@7.6.4
   '@types/babel__core': 7.1.3
@@ -13,7 +13,6 @@ devDependencies:
   prettier: 1.18.2
   standard: 8.6.0
   typescript: 3.6.4
-  typescript-snapshots-plugin: 1.7.0
 lockfileVersion: 5.1
 packages:
   /@babel/code-frame/7.5.5:
@@ -140,26 +139,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-D8RHPW5qd0Vbyo3qb+YjO5nvUVRTXFLQ/FsDxJU2Nqz4uB5EnUN0ZQSEYpvTIbRuttig1XbHWU5oMeQwQSAA+A==
-  /@babel/plugin-proposal-decorators/7.6.0_@babel+core@7.6.4:
+  /@babel/plugin-proposal-class-properties/7.5.5_@babel+core@7.6.4:
     dependencies:
       '@babel/core': 7.6.4
       '@babel/helper-create-class-features-plugin': 7.6.0_@babel+core@7.6.4
       '@babel/helper-plugin-utils': 7.0.0
-      '@babel/plugin-syntax-decorators': 7.2.0_@babel+core@7.6.4
     dev: true
     peerDependencies:
       '@babel/core': ^7.0.0-0
     resolution:
-      integrity: sha512-ZSyYw9trQI50sES6YxREXKu+4b7MAg6Qx2cvyDDYjP2Hpzd3FleOUwC9cqn1+za8d0A2ZU8SHujxFao956efUg==
-  /@babel/plugin-syntax-decorators/7.2.0_@babel+core@7.6.4:
-    dependencies:
-      '@babel/core': 7.6.4
-      '@babel/helper-plugin-utils': 7.0.0
-    dev: true
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    resolution:
-      integrity: sha512-38QdqVoXdHUQfTpZo3rQwqQdWtCn5tMv4uV6r2RMfTqNBuv4ZBhz79SfaQWKTVmxHjeFv/DnXVC/+agHCklYWA==
+      integrity: sha512-AF79FsnWFxjlaosgdi421vmYG6/jg79bVD0dpD44QdgobzHKuLZ6S3vl8la9qIeSwGi8i1fS0O1mfuDAAdo1/A==
   /@babel/plugin-syntax-jsx/7.2.0_@babel+core@7.6.4:
     dependencies:
       '@babel/core': 7.6.4
@@ -4142,10 +4131,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript-snapshots-plugin/1.7.0:
-    dev: true
-    resolution:
-      integrity: sha512-mWoH2E7/LnXy19YaJKKTWQCajRAdyFMNeMpUFN8XqB0zf/cNTM5JiiGpdpXtzjb3iyzwSEWcGqD8WA0XRp5eug==
   /typescript/3.6.4:
     dev: true
     engines:
@@ -4383,7 +4368,7 @@ packages:
 specifiers:
   '@babel/core': ^7.0.0
   '@babel/helper-plugin-utils': ^7.0.0
-  '@babel/plugin-proposal-decorators': ^7.6.0
+  '@babel/plugin-proposal-class-properties': ^7.5.5
   '@babel/preset-react': ^7.0.0
   '@babel/preset-typescript': ^7.6.0
   '@types/babel__core': ^7.1.3
@@ -4394,4 +4379,3 @@ specifiers:
   prettier: ^1.18.2
   standard: ^8.1.0
   typescript: ^3.6.4
-  typescript-snapshots-plugin: ^1.7.0

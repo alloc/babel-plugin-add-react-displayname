@@ -29,26 +29,9 @@ function transformFile(filename) {
   return babel.transformFileSync(filename, {
     presets: ['@babel/react', '@babel/typescript'],
     plugins: [
-      [
-        pluginPath,
-        { knownComponents: ['Component5a', 'Component5b', 'Component5c'] },
-      ],
-      ['@babel/proposal-decorators', { legacy: true }],
-      // ['@babel/proposal-class-properties', { loose: true }],
-      // '@babel/proposal-do-expressions',
-      // '@babel/proposal-export-default-from',
-      // '@babel/proposal-export-namespace-from',
-      // '@babel/proposal-function-bind',
-      // '@babel/proposal-function-sent',
-      // '@babel/proposal-json-strings',
-      // '@babel/proposal-logical-assignment-operators',
-      // '@babel/proposal-nullish-coalescing-operator',
-      // '@babel/proposal-numeric-separator',
-      // '@babel/proposal-optional-chaining',
-      // // '@babel/proposal-pipeline-operator',
-      // '@babel/proposal-throw-expressions',
-      // '@babel/syntax-dynamic-import',
-      // '@babel/syntax-import-meta',
+      '@babel/transform-flow-strip-types',
+      ['@babel/proposal-class-properties', { loose: true }],
+      pluginPath,
     ],
   }).code
 }
