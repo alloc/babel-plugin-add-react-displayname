@@ -1,7 +1,7 @@
 {
   "name": "@wana/babel-plugin-add-react-displayname",
   "version": "0.0.5",
-  "description": "Automatically add displayName to all your withAuto components",
+  "description": "Set the displayName of your higher-order function components",
   "main": "index.js",
   "devDependencies": {
     "@babel/core": "^7.0.0",
