@@ -1,4 +1,4 @@
 // Exported default stateless component used in variable declaration
-export default function ({value}) {
+export default function({ value }) {
   return <div>{value}</div>
 }

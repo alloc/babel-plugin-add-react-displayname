@@ -1,3 +1,5 @@
+import React from 'react'
+
 // Exported stateless componenet
 export function Component1a(value) {
   return <div>{value}</div>
@@ -9,22 +11,22 @@ function Component1b(value) {
 }
 
 // Stateless componenet used in a variable declaration
-var Component1c = function (value) {
+var Component1c = function(value) {
   return <div>{value}</div>
 }
 
 // Exported named stateless component used in variable declaration
-export var Component1d = function (value) {
+export var Component1d = function(value) {
   return <div>{value}</div>
 }
 
 // Stateless componenet used in an assignment
-var Component1e;
-Component1e = function (value) {
+var Component1e
+Component1e = function(value) {
   return <div>{value}</div>
 }
 
 // Exported default stateless *named* component used in variable declaration
-export default function Component1f (value) {
+export default function Component1f(value) {
   return <div>{value}</div>
 }

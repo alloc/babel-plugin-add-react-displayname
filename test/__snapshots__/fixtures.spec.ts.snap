@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add-react-displayname transform transforms arrowFun 1`] = `
+"// Stateless component with an arrow function
+var Component2 = ({
+  value
+}) => {
+  return React.createElement(\\"div\\", null, value);
+};"
+`;
+
+exports[`add-react-displayname transform transforms classComponents 1`] = `
+"import React from 'react';
+import { Component } from 'react';
+export class Component3a extends React.Component {
+  render() {
+    return React.createElement(\\"div\\", null);
+  }
+
+}
+export default class Component3b extends React.Component {
+  render() {
+    return React.createElement(\\"div\\", null);
+  }
+
+}
+export class Component3c extends Component {
+  render() {
+    return React.createElement(\\"div\\", null);
+  }
+
+}
+
+class Component3d extends Component {
+  static get = () => {
+    return React.createElement(\\"div\\", null);
+  };
+
+  render() {
+    return React.createElement(\\"div\\", null);
+  }
+
+}"
+`;
+
+exports[`add-react-displayname transform transforms createClass 1`] = `
+"import React from 'react';
+export var Component0 = React.createClass({
+  displayName: \\"Component0\\",
+  render: function () {
+    ;
+    React.createElement(\\"div\\", null);
+  }
+});"
+`;
+
+exports[`add-react-displayname transform transforms decorators 1`] = `
+"var _dec, _class;
+
+import React from 'react';
+import { Component } from 'react';
+import connect from '../decorators/connect';
+let DecoratedComponent = (_dec = connect(Component), _dec(_class = class DecoratedComponent extends React.Component {
+  render() {
+    return React.createElement(\\"div\\", null);
+  }
+
+}) || _class);
+export { DecoratedComponent as default };"
+`;
+
+exports[`add-react-displayname transform transforms emptyReturn 1`] = `
+"// Arrow function with empty return
+var emptyReturnFunction = () => {
+  return;
+};"
+`;
+
+exports[`add-react-displayname transform transforms exportDefaultAnon 1`] = `
+"// Exported default stateless component used in variable declaration
+export default function ({
+  value
+}) {
+  return React.createElement(\\"div\\", null, value);
+}"
+`;
+
+exports[`add-react-displayname transform transforms functionExpr 1`] = `
+"import React from 'react'; // Exported stateless componenet
+
+export function Component1a(value) {
+  return React.createElement(\\"div\\", null, value);
+} // Stateless componenet
+
+function Component1b(value) {
+  return React.createElement(\\"div\\", null, value);
+} // Stateless componenet used in a variable declaration
+
+
+var Component1c = function (value) {
+  return React.createElement(\\"div\\", null, value);
+}; // Exported named stateless component used in variable declaration
+
+
+export var Component1d = function (value) {
+  return React.createElement(\\"div\\", null, value);
+}; // Stateless componenet used in an assignment
+
+var Component1e;
+
+Component1e = function (value) {
+  return React.createElement(\\"div\\", null, value);
+}; // Exported default stateless *named* component used in variable declaration
+
+
+export default function Component1f(value) {
+  return React.createElement(\\"div\\", null, value);
+}"
+`;
+
+exports[`add-react-displayname transform transforms knownComponents 1`] = `
+"// Specifically configured to set name on Component5a and Component5b
+function Component5a() {
+  return 'some string';
+}
+
+var Component5b = function () {
+  return 'some string';
+}; // Known component's name used inside another function
+
+
+var Component5c = function () {
+  function Component5c() {}
+
+  return Component5c;
+}();"
+`;
+
+exports[`add-react-displayname transform transforms passThrough 1`] = `
+"// ---------------------
+// Should pass through unaltered
+// ---------------------
+var f1 = function ({
+  value
+}) {
+  return 'somestring';
+};
+
+function f2({
+  value
+}) {
+  return 'somestring';
+}
+
+class f3 {
+  method1() {
+    return 'whatever';
+  }
+
+}
+
+var f4 = React.createElement(\\"div\\", null, (() => React.createElement(\\"span\\", null))()); // Known component which doesn't sit directly on the \`Program\` node get left alone
+
+{
+  var Component5c = function () {
+    function Component5c() {}
+
+    return Component5c;
+  }();
+} // ---------------------
+// Not supported
+// ---------------------
+
+var value = null; // High-order things will be hard to catch
+
+var jsxChunk = React.createElement(\\"div\\", null, value);
+
+function UnsupportedComponent1({
+  value
+}) {
+  return function () {
+    return jsxChunk;
+  };
+}
+
+var a = {
+  smoke: function () {},
+  Component1d: function ({
+    value
+  }) {
+    return React.createElement(\\"div\\", null, value);
+  }
+};
+
+var external = function () {
+  var internal = function () {
+    return React.createElement(\\"div\\", null);
+  };
+
+  return internal;
+};"
+`;
+
+exports[`add-react-displayname transform transforms wana 1`] = `
+"import React from 'react';
+import { withAuto } from 'wana'; // Some comment
+
+const A = withAuto(() => {
+  return React.createElement(\\"div\\", null);
+});
+A.displayName = \\"A\\"; // Some comment
+
+export const B = withAuto(() => React.createElement(\\"div\\", null));
+B.displayName = \\"B\\";"
+`;
+
+exports[`add-react-displayname transform transforms wrappedFunctionComponents 1`] = `
+"import React from 'react';
+const Test = React.memo(React.forwardRef((props, ref) => {
+  return React.createElement(\\"div\\", null);
+}));
+Test.displayName = \\"Test\\";"
+`;
