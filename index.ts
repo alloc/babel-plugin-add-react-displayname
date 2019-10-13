@@ -7,39 +7,6 @@ export default declare(
     return {
       name: '@wana/babel-plugin-add-react-displayname',
       visitor: {
-        // Program(path) {
-        //   const { node } = path
-
-        //   const imports = node.body.filter(
-        //     isImportNamed('wana')
-        //   ) as t.ImportDeclaration[]
-
-        //   if (!imports.length) return
-        //   const match = imports.find(hasImportSpecifier('withAuto'))
-
-        //   if (!match) return
-        //   path.get('body').forEach(path => {
-        //     let { node } = path
-
-        //     // Coerce "export const" to "const"
-        //     if (t.isExportNamedDeclaration(node)) {
-        //       if (!(node = node.declaration!)) return
-        //     }
-
-        //     // Find variables that call "withAuto"
-        //     if (t.isVariableDeclaration(node)) {
-        //       const variables = node.declarations.filter(
-        //         node =>
-        //           node.init &&
-        //           t.isIdentifier(node.id) &&
-        //           hasCallee(node.init, 'withAuto')
-        //       )
-        //       for (const variable of variables) {
-        //         setDisplayNameAfter(path, variable.id as t.Identifier)
-        //       }
-        //     }
-        //   })
-        // },
         FunctionExpression(path) {
           setDisplayNameIfPossible(path)
         },
