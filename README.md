@@ -9,7 +9,7 @@ Forked from: [opbeat/babel-plugin-add-react-displayname](https://github.com/opbe
 
 Works with **Babel 7.0.0+**
 
-### Install
+## Usage
 
 ```sh
 npm install @wana/babel-plugin-add-react-displayname
@@ -24,3 +24,10 @@ And in `.babelrc` or whatever:
     ]
 }
 ```
+
+### Options
+
+- `callees?: string[]`
+
+  Set the `displayName` of any component wrapped by one of these function names,
+  even when the component doesn't return JSX.

@@ -1,17 +1,21 @@
 import { declare } from '@babel/helper-plugin-utils'
 import { types as t, ConfigAPI, PluginObj, NodePath } from '@babel/core'
 
+type Options = {
+  callees?: string[]
+}
+
 export default declare(
   (api: ConfigAPI): PluginObj => {
     api.assertVersion(7)
     return {
       name: '@wana/babel-plugin-add-react-displayname',
       visitor: {
-        FunctionExpression(path) {
-          setDisplayNameIfPossible(path)
+        FunctionExpression(path, state) {
+          setDisplayNameIfPossible(path, state as any)
         },
-        ArrowFunctionExpression(path) {
-          setDisplayNameIfPossible(path)
+        ArrowFunctionExpression(path, state) {
+          setDisplayNameIfPossible(path, state as any)
         },
       },
     }
@@ -19,31 +23,28 @@ export default declare(
 )
 
 function setDisplayNameIfPossible(
-  path: NodePath<t.FunctionExpression | t.ArrowFunctionExpression>
+  path: NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
+  state: { opts: Options }
 ) {
   const prevStmt = findBlockChild(path)
   if (!prevStmt) return
 
-  const displayName = inferDisplayName(path)
+  const displayName = inferDisplayName(path, state.opts)
   if (!displayName) return
 
-  try {
-    const newStmt = t.expressionStatement(
-      t.assignmentExpression(
-        '=',
-        t.memberExpression(
-          t.identifier(displayName),
-          t.identifier('displayName')
-        ),
-        t.stringLiteral(displayName)
-      )
+  const newStmt = t.expressionStatement(
+    t.assignmentExpression(
+      '=',
+      t.memberExpression(
+        t.identifier(displayName),
+        t.identifier('displayName')
+      ),
+      t.stringLiteral(displayName)
     )
-    newStmt.trailingComments = prevStmt.node.trailingComments
-    delete prevStmt.node.trailingComments
-    prevStmt.insertAfter(newStmt)
-  } catch (err) {
-    debugger
-  }
+  )
+  newStmt.trailingComments = prevStmt.node.trailingComments
+  delete prevStmt.node.trailingComments
+  prevStmt.insertAfter(newStmt)
 }
 
 function findLeftValue(expr: NodePath<t.Expression>) {
@@ -75,7 +76,8 @@ function findBlockChild(path: NodePath) {
 }
 
 function inferDisplayName(
-  funcPath: NodePath<t.FunctionExpression | t.ArrowFunctionExpression>
+  funcPath: NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
+  opts: Options
 ) {
   const parentNode = funcPath.parentPath.node
   if (t.isVariableDeclarator(parentNode)) {
@@ -86,13 +88,27 @@ function inferDisplayName(
     // Ignore IIFEs that return JSX, like "(() => { ... })()"
     return null
   }
-  if (doesReturnJSX(funcPath.node.body)) {
+  if (
+    doesReturnJSX(funcPath.node.body) ||
+    (opts.callees && opts.callees.some(callee => hasCallee(funcPath, callee)))
+  ) {
     const left = findLeftValue(funcPath)
     if (t.isIdentifier(left)) {
       return left.name
     }
   }
   return null
+}
+
+function hasCallee(path: NodePath, callee: string) {
+  path = path.parentPath
+  while (path.isCallExpression()) {
+    if (t.isIdentifier(path.node.callee, { name: callee })) {
+      return true
+    }
+    path = path.parentPath
+  }
+  return false
 }
 
 function doesReturnJSX(node: t.Expression | t.BlockStatement) {

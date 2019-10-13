@@ -29,9 +29,8 @@ function transformFile(filename) {
   return babel.transformFileSync(filename, {
     presets: ['@babel/react', '@babel/typescript'],
     plugins: [
-      '@babel/transform-flow-strip-types',
       ['@babel/proposal-class-properties', { loose: true }],
-      pluginPath,
+      [pluginPath, { callees: ['withThing'] }],
     ],
   }).code
 }

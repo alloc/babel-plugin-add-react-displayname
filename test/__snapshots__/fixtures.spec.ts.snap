@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`add-react-displayname transform transforms calleesOption 1`] = `
+"const Test1 = withThing(arg);
+export const Test2 = withThing(() => null);
+Test2.displayName = \\"Test2\\";"
+`;
+
 exports[`add-react-displayname transform transforms createClass 1`] = `
 "// not supported
 export const Test1 = React.createClass({
