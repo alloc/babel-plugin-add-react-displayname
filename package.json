@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Set the displayName of your higher-order function components",
   "main": "index.js",
+  "files": [
+    "index.*"
+  ],
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
