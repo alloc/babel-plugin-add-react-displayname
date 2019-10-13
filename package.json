@@ -1,6 +1,6 @@
 {
   "name": "@wana/babel-plugin-add-react-displayname",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "Set the displayName of your higher-order function components",
   "main": "index.js",
   "devDependencies": {
