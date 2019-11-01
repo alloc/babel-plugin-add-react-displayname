@@ -113,7 +113,7 @@ function hasCallee(path: NodePath, callee: string) {
 
 function doesReturnJSX(node: t.Expression | t.BlockStatement) {
   if (!node) return false
-  if (t.isJSXElement(node)) {
+  if (t.isJSX(node)) {
     return true
   }
 
@@ -122,7 +122,7 @@ function doesReturnJSX(node: t.Expression | t.BlockStatement) {
     if (len) {
       const lastNode = node.body[len - 1]
       if (t.isReturnStatement(lastNode)) {
-        return lastNode.argument && t.isJSXElement(lastNode.argument)
+        return lastNode.argument && t.isJSX(lastNode.argument)
       }
     }
   }
