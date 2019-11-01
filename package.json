@@ -24,16 +24,9 @@
     "build": "tsc -p .",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/opbeat/babel-plugin-add-react-displayname.git"
-  },
-  "author": "Ron Cohen",
+  "repository": "alloc/babel-plugin-add-react-displayname",
+  "author": "Alec Larson",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/opbeat/babel-plugin-add-react-displayname/issues"
-  },
-  "homepage": "https://github.com/opbeat/babel-plugin-add-react-displayname#readme",
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.0.0"
   }
