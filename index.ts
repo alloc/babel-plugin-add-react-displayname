@@ -43,7 +43,7 @@ function setDisplayNameIfPossible(
     )
   )
   newStmt.trailingComments = prevStmt.node.trailingComments
-  delete prevStmt.node.trailingComments
+  prevStmt.node.trailingComments = null
   prevStmt.insertAfter(newStmt)
 }
 
