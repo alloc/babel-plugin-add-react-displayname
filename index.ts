@@ -8,14 +8,19 @@ type Options = {
 export default declare(
   (api: ConfigAPI): PluginObj => {
     api.assertVersion(7)
+    const FunctionVisitor: babel.Visitor<any> = {
+      FunctionExpression(path, state) {
+        setDisplayNameIfPossible(path, state)
+      },
+      ArrowFunctionExpression(path, state) {
+        setDisplayNameIfPossible(path, state)
+      },
+    }
     return {
       name: '@wana/babel-plugin-add-react-displayname',
       visitor: {
-        FunctionExpression(path, state) {
-          setDisplayNameIfPossible(path, state as any)
-        },
-        ArrowFunctionExpression(path, state) {
-          setDisplayNameIfPossible(path, state as any)
+        VariableDeclaration(path, state) {
+          path.traverse(FunctionVisitor, state)
         },
       },
     }
