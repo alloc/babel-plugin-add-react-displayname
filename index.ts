@@ -37,19 +37,37 @@ function setDisplayNameIfPossible(
   const displayName = inferDisplayName(path, state.opts)
   if (!displayName || /^[a-z]/.test(displayName)) return
 
-  const newStmt = t.expressionStatement(
-    t.assignmentExpression(
-      '=',
-      t.memberExpression(
-        t.identifier(displayName),
-        t.identifier('displayName')
-      ),
-      t.stringLiteral(displayName)
+  if (path.isArrowFunctionExpression()) {
+    const { params, body, returnType, typeParameters } = path.node
+    const bodyBlock = t.isExpression(body)
+      ? t.blockStatement([t.returnStatement(body)])
+      : body
+    const functionExpr: Parameters<typeof t.functionExpression> = [
+      t.identifier(displayName),
+      params,
+      bodyBlock,
+      false,
+      false,
+    ]
+    if (returnType || typeParameters) {
+      functionExpr.push(returnType, typeParameters)
+    }
+    path.replaceWith(t.functionExpression(...functionExpr))
+  } else {
+    const newStmt = t.expressionStatement(
+      t.assignmentExpression(
+        '=',
+        t.memberExpression(
+          t.identifier(displayName),
+          t.identifier('displayName')
+        ),
+        t.stringLiteral(displayName)
+      )
     )
-  )
-  newStmt.trailingComments = prevStmt.node.trailingComments
-  prevStmt.node.trailingComments = null
-  prevStmt.insertAfter(newStmt)
+    newStmt.trailingComments = prevStmt.node.trailingComments
+    prevStmt.node.trailingComments = null
+    prevStmt.insertAfter(newStmt)
+  }
 }
 
 function findLeftValue(expr: NodePath<t.Expression>) {
