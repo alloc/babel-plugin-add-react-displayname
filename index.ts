@@ -35,7 +35,7 @@ function setDisplayNameIfPossible(
   if (!prevStmt) return
 
   const displayName = inferDisplayName(path, state.opts)
-  if (!displayName || /[a-z]/.test(displayName)) return
+  if (!displayName || /^[a-z]/.test(displayName)) return
 
   const newStmt = t.expressionStatement(
     t.assignmentExpression(
